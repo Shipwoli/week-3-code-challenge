@@ -1,0 +1,24 @@
+{
+  "name": "flatdango",
+  "version": "1.0.0",
+  "description": "\"Flatdango movie theater app for buying tickets and showing movies that are being showcased.\"",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Shipwoli/week-3-code-challenge.git"
+  },
+  "keywords": [
+    "\"movie\"",
+    "\"purchase\"",
+    "\"ticket\""
+  ],
+  "author": "saviour khalwale",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Shipwoli/week-3-code-challenge/issues"
+  },
+  "homepage": "https://github.com/Shipwoli/week-3-code-challenge#readme"
+}
