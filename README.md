@@ -1,6 +1,8 @@
 # week-3-code-challenge
 #Flatdango
 
+<b> live at: https://shipwoli.github.io/week-3-code-challenge/  </b>
+
 Flatiron Movie Theater is open for business! I will be building out an
 application, Flatdango, that allows a user to purchase movie tickets from the
 theater.
