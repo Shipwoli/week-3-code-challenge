@@ -1,150 +1,101 @@
-const url = "http://localhost:3000/films"
-
-document.addEventListener('DOMContentLoaded',()=>{
-
-    const moviePlaceHolder = ()=>{
-        fetch(url)
-        .then(res =>res.json())
-        .then(content =>{
-            const firstMovie = content[0]
-
-            const filmImg = document.getElementById("poster")
-            const movieTitle = document.getElementById("filmTitle")
-            const movieDescr = document.getElementById("movieDescription")
-            const runningTime = document.getElementById("runtime")
-            const showingTime = document.getElementById("showtime")
-            const availTicket =document.getElementById("ticketsAvailable")
-            filmImg.src = firstMovie.poster
-            movieTitle.innerText = firstMovie.title
-            movieDescr.textContent = firstMovie.decription
-            runningTime.innerText =`Runtime: ${firstMovie.runtime} minutes`
-            showingTime.innerText =`Showtime: ${firstMovie.showtime}`
-            availTicket.innerText =`Tickets Available: (${firstMovie.capacity - firstMovie.tickets_sold})`
-
-
-            const ticketBuy = document.getElementById("buyTicket")
-            let tickets = Number(firstMovie.capacity - firstMovie.tickets_sold)
-
-            ticketBuy.addEventListener('click',()=>{
-
-                tickets--
-
-                // const ticketRemaining = tickets-1
-
-                if(tickets <= 0){
-                    const frstMovie = document.getElementById("1")
-                    frstMovie.innerHTML=`${firstMovie.title}  <span class="badge bg-danger me-1">SOLD OUT</span>`
-
-                    availTicket.innerHTML = `Ticketd available:  <span class="badge bg-danger">SOLD OUT</span>`
-                }else{
-                    availTicket.innerText = `Tickets available: (${tickets})`
-                }
-            })
-
-        })
-
-
-
-
-    }
-    const movieDetails = ()=>{
-        fetch(url)
-        .then(response=>response.json())
-        .then(data=>{
-            console.log(data)
-            for(let i = 0; i < data.length; i++){
-                let item = data[i]
-                console.log(item)
-                const movieList = document.createElement("li")
-                const list = document.getElementById("showingMovie")
-
-                movieList.classList.add("list-group-item", "border", "border-info")
-
-                movieList.setAttribute('id',`${item.id}`)
-                movieList.innerText = item.title
-                console.log(item.title)
-
-
-                list.appendChild(movieList)
-
-                movieList.addEventListener('click',()=>{
-                    const filmImage = document.getElementById("poster")
-                    const filmTitle = document.getElementById("filmTitle")
-                    const filmDescr = document.getElementById("movieDescription")
-                    const runTime = document.getElementById("runtime")
-                    const showTime = document.getElementById("showtime")
-                    const availTickets =document.getElementById("ticketsAvailable")
-
-
-                    filmImage.src = item.poster
-                    filmTitle.innerText = item.title
-                    filmDescr.textContent = item.decription
-                    runTime.innerHTML =`Runtime:<span>${item.runtime}</span>`
-                    showTime.innerText =`Showtime: ${item.showtime}`
-                    availTickets.innerText =`Tickets available: (${item.capacity - item.tickets_sold})`
-
-                    const ticketsBuy = document.getElementById("buyTicket")
-                    let ticket = Number(item.capacity - item.tickets_sold)
-
-                    ticketsBuy.addEventListener('click',()=>{
-
-                        // const ticketRemain = ticket-1
-                        ticket --
-                        if(ticket <= 0){
-                            movieList.innerHTML =`${item.title} <span class="badge bg-danger">SOLD OUT</span>`
-
-                            availTickets.innerHTML = `Tickets available: <span class="badge bg-danger">SOLD OUT</span>`
-
-                        }else{
-
-                            availTickets.innerText = `Tickets available: (${ticket})`
-                        }
-                        // availTickets.innerText = `Tickets available: ${ticket}`
-                        // while(ticket> -1){
-                        //     availTickets.innerText = `Tickets available: ${ticket}`
-                        //     if(ticket === 0){
-                        //         return availTickets.innerText = "SOLD OUT"
-                        //     }
-
-                        // }
-
-
-
-
-                        // if(ticket === 0){
-                        //     return availTickets.innerText = "SOLD OUT"
-                        // }
-
-                        // for(let i = ticket; i > -1 ; i-=1 ){
-
-                        //     const ticketRemain = i
-                        //     availTickets.innerText = `Tickets available: ${ticketRemain}`
-                        //     if(ticketRemain === 0){
-                        //         availTickets.innerText = "SOLD OUT"
-                        //     }
-
-
-                        // }
-
-
-                    })
-
-
-
-                })
-
-
-            }
-
-
-
-
-        })
-
-    }
-
-
-    movieDetails()
-    moviePlaceHolder()
-
-})
+//fetches data from the mock server.T
+function fetchData() {
+    fetch("http://localhost:3000/films")
+      .then((response) => response.json())
+      .then((data) => appendFirstMovie(data));
+  }
+  fetchData();
+   
+  //append first movie when the page loads
+  function appendFirstMovie(data) {
+    let first = data[0];
+    let butonn = document.getElementById("button");
+    butonn.innerHTML = "";
+    let image = document.getElementById("pic");
+    let title = document.getElementById("title");
+    let runtime = document.getElementById("runtime");
+    let showtime = document.getElementById("showtime");
+    let tickets = document.getElementById("tickets");
+    let description = document.getElementById("description");
+    let button = document.createElement("button");
+    button.id = "btn";
+    button.textContent = "Buy Ticket";
+    let total = first.capacity - first.tickets_sold;
+    button.addEventListener("click", () => {
+      if (total > 0) {
+        total -= 1;
+        document.getElementById("tickets").innerHTML = total;
+      } else if (total < 1) {
+        document.getElementById("tickets").innerHTML = "*No tickets available";
+      }
+    });
+    title.textContent = first.title;
+    runtime.textContent = first.runtime;
+    showtime.textContent = first.showtime;
+    tickets.textContent = first.capacity - first.tickets_sold;
+    description.textContent = first.description;
+    image.src = `
+      ${first.poster}
+      `;
+    butonn.appendChild(button);
+  }
+  
+  //fetches list of movies in the menu section
+  function appendMenu() {
+    fetch("http://localhost:3000/films")
+      .then((response) => response.json())
+      .then((data) => menuTitles(data));
+  }
+  appendMenu();
+  
+  //Displays menu titles on the menu section
+  function menuTitles(data) {
+    data.forEach((item) => {
+      let title = document.createElement("li");
+      title.id = "list";
+      title.addEventListener("click", () => {
+        const i = item.id;
+        appendIndividualDetails(data[i - 1]);
+      });
+      let menu = document.getElementById("menu");
+      title.textContent = item.title;
+      menu.appendChild(title);
+    });
+  }
+  
+  //appends details of the specific name that is clicked on the
+  function appendIndividualDetails(item) {
+    let butonn = document.getElementById("button");
+    butonn.innerHTML = "";
+    let image = document.getElementById("pic");
+    let title = document.getElementById("title");
+    let runtime = document.getElementById("runtime");
+    let showtime = document.getElementById("showtime");
+    let tickets = document.getElementById("tickets");
+    let description = document.getElementById("description");
+    let button = document.createElement("button");
+    button.id = "btn";
+    button.textContent = "Buy Ticket";
+    let total = item.capacity - item.tickets_sold;
+    //adds button fo buying tickets.
+    button.addEventListener("click", () => {
+      //if tickets available is greater than 0 the total amount decreses by one every time it is pressed otherwise it prints a message
+      if (total > 0) {
+        total -= 1;
+        document.getElementById("tickets").innerHTML = total;
+      } else if (total < 1) {
+        document.getElementById("tickets").innerHTML = "*No tickets available";
+      }
+    });
+  
+    title.textContent = item.title;
+    runtime.textContent = item.runtime;
+    showtime.textContent = item.showtime;
+    tickets.textContent = item.capacity - item.tickets_sold;
+    description.textContent = item.description;
+    image.src = `
+      ${item.poster}
+      `;
+    butonn.appendChild(button);
+  }
+  

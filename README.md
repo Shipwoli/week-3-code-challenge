@@ -23,6 +23,7 @@ To install the repository on your machine follow the instructions below;
 The app fetches data from a mock server and renders it on the page.When the page loads the first movie on list is displayed on the right side.On the left side,a list of the available movies is shown.One can view the details, that is the title,the runtime,the showtime,the number of tickets available and a brief description of what the movies is aboutn its name.There is a buy tickets button where a user presses if he/she wants to purchase a ticket.If tickets available are 0 it displays "No tickets available" at the tickets section.
 
 # RUNNING THE APPLICATION
+kindly clone this repo 
 You can access the web app directly by clicking   <a href = "https://shipwoli.github.io/week-3-code-challenge/">here</a>.
 
   
