@@ -47,9 +47,6 @@ document.addEventListener('DOMContentLoaded',()=>{
 
 
     }
-
-
-
     const movieDetails = ()=>{
         fetch(url)
         .then(response=>response.json())
